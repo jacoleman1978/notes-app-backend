@@ -6,6 +6,8 @@ const usersSchema = new mongoose.Schema({
     userName: {type: String, unique: true, required: true},
     email: {type: String, unique: true, required: true},
     hashedPwd: {type: String, required: true}
+}, {
+    collection: 'users'
 })
 
-module.exports = mongoose.model('Users', userSchema)
+module.exports = mongoose.model('Users', usersSchema)
