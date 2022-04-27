@@ -16,6 +16,11 @@ async function main() {
             useUnifiedTopology: true
         });
 
+        const connection = mongoose.connection;
+        connection.once('open', () => {
+            console.log("Successfully connected to MongoDB")
+        })
+
         // Add a port listener to the app
         app.listen(PORT, () => {
             console.log(`Nomming on port: ${PORT}`)
@@ -26,4 +31,5 @@ async function main() {
     }
 }
 
+// Run the main function and catch any errors that were generated
 main().catch(err => console.log(err));
