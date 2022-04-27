@@ -1,5 +1,5 @@
-const User = require('../models/userSchema');
-const bcrypt = require('bcrypt');
+import User from '../models/userSchema.js';
+import { compare, genSalt, hash } from 'bcrypt';
 
 class UserController {
     // Get user info via GET
@@ -13,7 +13,7 @@ class UserController {
             // Check whether there is a user found or not
             if (user) {
                 // Check user password with hashed password in database
-                const isValidPassword = await bcrypt.compare(body.password, user.password);
+                const isValidPassword = await compare(body.password, user.password);
 
                 if (isValidPassword) {
                     res.status(200).json({message: "Valid password"});
@@ -45,10 +45,10 @@ class UserController {
             });
         
             // Generate salt to hash password
-            const salt = await bcrypt.genSalt(10);
+            const salt = await genSalt(10);
 
             // Hash the user's password
-            user.password = await bcrypt.hash(user.password, salt);
+            user.password = await hash(user.password, salt);
             user.save().then((doc) => res.status(201).send(doc));
 
         } catch(error) {
@@ -57,4 +57,4 @@ class UserController {
     }
 }
 
-module.exports = UserController;
+export default UserController;

@@ -1,16 +1,17 @@
 // Dependencies
-const app = require('./server.js');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
+import app from './server.js';
+import { config } from 'dotenv';
+import pkg from 'mongoose';
+const { connect } = pkg;
 
-main = () => {
-    dotenv.config();
+const main = () => {
+    config();
   
     // Set PORT from .env or 4343 if not assigned
     const PORT = process.env.PORT || 4343;
 
     // Connect to MongoDB
-    mongoose.connect(process.env.ATLAS_URI, {
+    connect(process.env.ATLAS_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
