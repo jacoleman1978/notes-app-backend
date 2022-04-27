@@ -1,14 +1,14 @@
 // Dependencies
-import express from 'express';
-import UserController from './userControllers.js';
+const express = require('express');
+const UserController = require('./userControllers.js');
 
 // Express Router
 const userRouter = express.Router();
 
 // Route to retrieve user info
-userRouter.route('/').get(UserController.GetUser);
+userRouter.route('/login').get(UserController.GetUser);
 
 // Route to create new user
-userRouter.route('/new').post(UserController.CreateUser);
+userRouter.route('/signup').post(UserController.CreateUser);
 
-export default userRouter;
+module.exports = userRouter;
