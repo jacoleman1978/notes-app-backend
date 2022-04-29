@@ -16,13 +16,13 @@ class UserController {
                 const isValidPassword = await compare(body.password, user.password);
 
                 if (isValidPassword) {
-                    res.status(200).json({message: "Valid password"});
+                    res.status(200).json({message: "Valid password", userId: user._id});
                 } else {
-                    res.status(400).json({error: "Invalid Password"});
+                    res.json({message: "Invalid password", userId: ""});
                 }
 
             } else {
-                res.status(401).json({error: "Username not found"});
+                res.json({message: "Invalid username", userId: ""});
             }
 
         } catch(error) {
