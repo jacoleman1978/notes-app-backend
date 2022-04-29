@@ -3,12 +3,12 @@ import { compare, genSalt, hash } from 'bcrypt';
 
 class UserController {
     // Get user info via GET
-    static async GetUser(req, res) {
+    static async Login(req, res) {
         const body = req.body;
 
         try {
             // Search for userName in database
-            const user = await User.findOne({userName: body.userName});
+            const user = await User.findOne({userName: body.username});
 
             // Check whether there is a user found or not
             if (user) {
@@ -31,7 +31,7 @@ class UserController {
     }
 
     // Create a new user via POST
-    static async CreateUser(req, res) {     
+    static async Signup(req, res) {     
         const body = req.body
 
         try {

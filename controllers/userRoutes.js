@@ -6,9 +6,9 @@ import UserController from './userControllers.js';
 const userRouter = Router();
 
 // Route to retrieve user info
-userRouter.route('/login').get(UserController.GetUser);
+userRouter.route('/login').post(UserController.Login);
 
 // Route to create new user
-userRouter.route('/signup').post(UserController.CreateUser);
+userRouter.route('/signup').post(UserController.Signup);
 
 export default userRouter;
