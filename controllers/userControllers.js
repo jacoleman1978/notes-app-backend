@@ -16,13 +16,13 @@ class UserController {
                 const isValidPassword = await compare(body.password, user.password);
 
                 if (isValidPassword) {
-                    res.status(200).json({message: "Valid password", userId: user._id});
+                    res.status(200).json({message: "Valid password", userId: user._id, userName: user.userName});
                 } else {
-                    res.json({message: "Invalid password", userId: ""});
+                    res.json({message: "Invalid password", userId: "", userName: ""});
                 }
 
             } else {
-                res.json({message: "Invalid username", userId: ""});
+                res.json({message: "Invalid username", userId: "", userName: ""});
             }
 
         } catch(error) {
@@ -52,7 +52,7 @@ class UserController {
 
             // Save the new document
             user.save().then((doc) => {
-                res.status(201).json({message: "Successfully created user", userId: doc._id})
+                res.status(201).json({message: "Successfully created user", userId: doc._id, userName: doc.userName})
             });
 
         } catch(error) {
