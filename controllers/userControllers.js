@@ -49,7 +49,11 @@ class UserController {
 
             // Hash the user's password
             user.password = await hash(user.password, salt);
-            user.save().then((doc) => res.status(201).send(doc));
+
+            // Save the new document
+            user.save().then((doc) => {
+                res.status(201).json({message: "Successfully created user", userId: doc._id})
+            });
 
         } catch(error) {
             res.status(500).json({error: error.message});
