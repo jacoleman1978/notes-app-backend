@@ -32,14 +32,14 @@ class UserController {
 
     // Create a new user via POST
     static async Signup(req, res) {     
-        const body = req.body
+        const body = req.body;
 
         try {
             // Create new mongoose document from user data
             const user = new User({
                 firstName: body.firstName,
                 lastName: body.lastName,
-                userName: body.userName,
+                userName: body.username,
                 email: body.email,
                 password: body.password
             });
@@ -50,6 +50,43 @@ class UserController {
             // Hash the user's password
             user.password = await hash(user.password, salt);
             user.save().then((doc) => res.status(201).send(doc));
+
+        } catch(error) {
+            res.status(500).json({error: error.message});
+        }
+    }
+
+    // Verify unique username and email entered during Signup
+    static async VerifySignup(req, res) {
+        const body = req.body;
+        let isUniqueUserName = false;
+        let isUniqueEmail = false;
+
+        try {
+            // Determine if userName already exists in database
+            let userNameExists = await User.findOne({userName: body.username});
+            
+            if (userNameExists) {
+                isUniqueUserName = false;
+            } else {
+                isUniqueUserName = true;
+            }
+
+            // Determine if email already exists in database
+            let emailExists = await User.findOne({email: body.email});
+
+            if (emailExists) {
+                isUniqueEmail = false;
+            } else {
+                isUniqueEmail = true;
+            }
+
+
+            // Return results to frontend
+            res.json({
+                isUniqueUserName: isUniqueUserName,
+                isUniqueEmail: isUniqueEmail
+            });
 
         } catch(error) {
             res.status(500).json({error: error.message});

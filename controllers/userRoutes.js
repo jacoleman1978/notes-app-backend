@@ -11,4 +11,7 @@ userRouter.route('/login').post(UserController.Login);
 // Route to create new user
 userRouter.route('/signup').post(UserController.Signup);
 
+// Route to verify unique username and email
+userRouter.route('/signup/verify').post(UserController.VerifySignup);
+
 export default userRouter;
