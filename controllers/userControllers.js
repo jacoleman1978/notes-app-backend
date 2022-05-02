@@ -2,10 +2,9 @@ import User from '../models/userSchema.js';
 import { compare, genSalt, hash } from 'bcrypt';
 
 class UserController {
-    // Get user info via GET
+    // Get user info via POST
     static async Login(req, res) {
         const body = req.body;
-
         try {
             // Search for userName in database
             const user = await User.findOne({userName: body.username});
@@ -16,7 +15,9 @@ class UserController {
                 const isValidPassword = await compare(body.password, user.password);
 
                 if (isValidPassword) {
-                    res.status(200).json({message: "Valid password", userId: user._id, userName: user.userName});
+                    req.session = user;
+                    req.session.userId = user._id;
+                    res.status(200).json({message: "Valid password", userId: user._id, userName: user.userName, session: req.session});
                 } else {
                     res.json({message: "Invalid password", userId: "", userName: ""});
                 }
@@ -94,6 +95,18 @@ class UserController {
 
         } catch(error) {
             res.status(500).json({error: error.message});
+        }
+    }
+
+    // Check session
+    static async CheckSession(req, res) {
+        try {
+            // Search for userId in database
+            const user = await User.findOne({_id: req.session._id});
+            res.json(user);
+
+        } catch {
+            res.json(null);
         }
     }
 }

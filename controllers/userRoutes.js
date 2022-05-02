@@ -14,4 +14,7 @@ userRouter.route('/signup').post(UserController.Signup);
 // Route to verify unique username and email
 userRouter.route('/signup/verify').post(UserController.VerifySignup);
 
+// Route for verifying session
+userRouter.route('/session').get(UserController.CheckSession);
+
 export default userRouter;
