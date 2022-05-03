@@ -2,7 +2,7 @@ import pkg from 'mongoose';
 const { Schema, model } = pkg;
 
 const NoteSchema = new Schema({
-    userId: {type: Schema.Types.ObjectId, ref: 'User'},
+    userName: {type: String},
     parentTopicId: {type: Schema.Types.ObjectId, ref: 'Topic'},
     content: {type: String}
 }, {collection: 'notes'});

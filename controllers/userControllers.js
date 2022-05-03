@@ -58,7 +58,7 @@ class UserController {
             });
             
             const newTopic = {
-                topicName: 'Home',
+                topicName: 'Home Directory',
                 userName: body.username,
                 topicChildrenIds: [],
                 noteChildrenIds: []

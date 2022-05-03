@@ -6,25 +6,24 @@ import NoteController from './noteControllers.js';
 const noteRouter = Router();
 
 // Route for creating a new topic
-noteRouter.route('/:userName/:topicId/new')
+noteRouter.route('/:userName/:topicId/new/topic')
     .post(NoteController.NewTopic)
 
-// Route to retrieve all user info
+// Route to retrieve all user topics and notes in the home directory
 noteRouter.route('/:userName').get(NoteController.GetHomeDirectory);
 
 // Route for a specific topic directory
 noteRouter.route('/:userName/:topicId')
-    .get(NoteController.GetTopics)
+    .get(NoteController.GetTopicsAndNotes)
     .put(NoteController.EditTopic)
     .delete(NoteController.DeleteTopic)
 
 // Route for creating a new note
-noteRouter.route('/:userName/:topicId/new')
+noteRouter.route('/:userName/:topicId/new/note')
     .post(NoteController.NewNote)
 
 // Route for a specific note
 noteRouter.route('/:userName/:topicId/:noteId')
-    .get(NoteController.GetNote)
     .put(NoteController.EditNote)
     .delete(NoteController.DeleteNote)
 
