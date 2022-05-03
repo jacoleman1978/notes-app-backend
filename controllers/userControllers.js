@@ -1,4 +1,5 @@
 import User from '../models/userSchema.js';
+import Topic from '../models/topicSchema.js';
 import { compare, genSalt, hash } from 'bcrypt';
 
 class UserController {
@@ -55,6 +56,15 @@ class UserController {
             user.save().then((doc) => {
                 res.status(201).json({message: "Successfully created user", userId: doc._id, userName: doc.userName})
             });
+            
+            const newTopic = {
+                topicName: 'Home',
+                userName: body.username,
+                topicChildrenIds: [],
+                noteChildrenIds: []
+            }
+            
+            await Topic.create(newTopic);
 
         } catch(error) {
             res.status(500).json({error: error.message});
