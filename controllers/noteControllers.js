@@ -108,20 +108,40 @@ class NoteController {
             const parentTopicId = req.params.topicId;
 
             const content = req.body.content;
+            const isSubnote = req.body.isSubnote;
+            const parentNoteId = req.body.parentNoteId;
 
-            const newNote = {
-                userName: req.params.userName,
-                parentTopicId: parentTopicId,
-                content: content
+            let newNote = {};
+
+            if (isSubnote === true) {
+                newNote = {
+                    userName: req.params.userName,
+                    parentTopicId: parentTopicId,
+                    parentNoteId: parentNoteId,
+                    subnoteIds: [],
+                    content: content
+                }
+            } else {
+                newNote = {
+                    userName: req.params.userName,
+                    parentTopicId: parentTopicId,
+                    subnoteIds: [],
+                    content: content
+                }
             }
             
             const doc = await Note.create(newNote);
-
-            // Add new noteId to the noteChildrenIds array of the parent topic
-            const parentTopic = await Topic.findOne({_id: parentTopicId});
             const childNoteId = doc._id;
-            parentTopic.noteChildrenIds.push(childNoteId);
-            await parentTopic.save();
+
+            if (isSubnote === true) {
+                const parentNote = await Note.findOne({_id: parentNoteId});
+                parentNote.subnoteIds.push(childNoteId);
+            } else {
+                // Add new noteId to the noteChildrenIds array of the parent topic
+                const parentTopic = await Topic.findOne({_id: parentTopicId});
+                parentTopic.noteChildrenIds.push(childNoteId);
+                await parentTopic.save();
+            }
 
             res.json(doc);
 
