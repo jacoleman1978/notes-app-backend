@@ -54,6 +54,8 @@ class UserController {
 
             // Save the new document
             user.save().then((doc) => {
+                req.session = user;
+                req.session.userId = user._id;
                 res.status(201).json({message: "Successfully created user", userId: doc._id, userName: doc.userName})
             });
             
