@@ -17,4 +17,7 @@ userRouter.route('/signup/verify').post(UserController.VerifySignup);
 // Route for verifying session
 userRouter.route('/session').get(UserController.CheckSession);
 
+// Route for logging out
+userRouter.route('/logout').get(UserController.Logout);
+
 export default userRouter;

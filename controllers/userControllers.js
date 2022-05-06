@@ -54,6 +54,7 @@ class UserController {
 
             // Save the new document
             user.save().then((doc) => {
+                req.session = null;
                 req.session = user;
                 req.session.userId = user._id;
                 res.status(201).json({message: "Successfully created user", userId: doc._id, userName: doc.userName})
@@ -120,6 +121,12 @@ class UserController {
         } catch {
             res.json(null);
         }
+    }
+
+    // Logout and remove session
+    static async Logout(req, res) {
+        req.session = null;
+        res.json({message: "Logged out"});
     }
 }
 
