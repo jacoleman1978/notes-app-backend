@@ -15,9 +15,9 @@ config();
 // Set PORT from .env or 4343 if not assigned
 const PORT = process.env.PORT || 4343;
 app.use(function(req, res, next) {
-    console.log("Added to fix OPTIONS")
+    res.setHeader('Access-Control-Allow-Origin', 'https://notesapp-milestone3.netlify.app');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', true);
     // handle OPTIONS method
     if ('OPTIONS' == req.method) {
@@ -34,7 +34,7 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 app.use(cors({
-    origin: `https://notes-app-milestone3.herokuapp.com/`,
+    origin: `https://notesapp-milestone3.netlify.app`,
     credentials: true
 }));
 app.use(json());
