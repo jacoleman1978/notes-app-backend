@@ -15,12 +15,14 @@ config();
 // Set PORT from .env or 4343 if not assigned
 const PORT = process.env.PORT || 4343;
 app.use(function(req, res, next) {
+    console.log("Added to fix OPTIONS")
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     // handle OPTIONS method
     if ('OPTIONS' == req.method) {
+        console.log("Hit if OPTIONS condition")
         return res.sendStatus(200);
     } else {
         next();
