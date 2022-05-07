@@ -6,6 +6,7 @@ class UserController {
     // Get user info via POST
     static async Login(req, res) {
         const body = req.body;
+        req.session = null;
         try {
             // Search for userName in database
             const user = await User.findOne({userName: body.username});
@@ -60,6 +61,7 @@ class UserController {
                 res.status(201).json({message: "Successfully created user", userId: doc._id, userName: doc.userName})
             });
             
+            // Create a 'Home Directory' root directory for the user
             const newTopic = {
                 topicName: 'Home Directory',
                 userName: body.username,
@@ -98,7 +100,6 @@ class UserController {
             } else {
                 isUniqueEmail = true;
             }
-
 
             // Return results to frontend
             res.json({

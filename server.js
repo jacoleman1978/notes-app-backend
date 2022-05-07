@@ -11,6 +11,7 @@ const app = express();
 
 // Middleware/Config
 config();
+
 // Set PORT from .env or 4343 if not assigned
 const PORT = process.env.PORT || 4343;
 app.use(cookieSession({

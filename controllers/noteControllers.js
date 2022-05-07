@@ -26,7 +26,7 @@ class NoteController {
                 const childTopicId = doc._id;
                 parentTopic.topicChildrenIds.push(childTopicId);
     
-                await parentTopic.save();
+                parentTopic.save();
 
                 res.json(doc);
             }
@@ -95,6 +95,12 @@ class NoteController {
             parentTopic.topicChildrenIds.pull(topicId);
             await parentTopic.save();
 
+            // Remove the notes with this topic as the parent
+            const noteChildren = await Note.find({parentTopicId: topicId});
+            noteChildren.forEach(async (note) => {
+                await Note.deleteOne({_id: note._id});
+            })
+
             res.json({parentTopicId: parentTopic._id});
 
         } catch(error) {
@@ -113,6 +119,7 @@ class NoteController {
 
             let newNote = {};
 
+            // Check if the new note is a subnote (future functionality) or not before setting data for newNote
             if (isSubnote === true) {
                 newNote = {
                     userName: req.params.userName,
@@ -133,9 +140,11 @@ class NoteController {
             const doc = await Note.create(newNote);
             const childNoteId = doc._id;
 
+            // If a subnote, add the subnote noteId to the parent Note
             if (isSubnote === true) {
                 const parentNote = await Note.findOne({_id: parentNoteId});
                 parentNote.subnoteIds.push(childNoteId);
+                await parentNote.save();
             } else {
                 // Add new noteId to the noteChildrenIds array of the parent topic
                 const parentTopic = await Topic.findOne({_id: parentTopicId});
