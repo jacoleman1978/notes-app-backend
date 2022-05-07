@@ -4,7 +4,7 @@ import UserController from './userControllers.js';
 
 // Express Router
 const userRouter = Router();
-console.log("hitting user router")
+
 // Route to retrieve user info
 userRouter.route('/login').post(UserController.Login);
 

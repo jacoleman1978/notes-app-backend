@@ -16,7 +16,6 @@ config();
 const PORT = process.env.PORT || 4343;
 app.use(function(req, res, next) {
     console.log("Added to fix OPTIONS")
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -35,7 +34,7 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 app.use(cors({
-    origin: `https://notesapp-milestone3.netlify.app/`,
+    origin: `https://notes-app-milestone3.herokuapp.com/`,
     credentials: true
 }));
 app.use(json());
