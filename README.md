@@ -20,6 +20,8 @@ MongoDB
 Bootstrap
 Axios
 Express
+Bcrypt
+CookieSession
 
 ### Outstanding Bugs
 The app will infrequently not refresh after creating a new Note or Topic, causing the new item to not appear without a refresh or logging back in.
