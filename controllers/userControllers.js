@@ -8,7 +8,6 @@ class UserController {
         const body = req.body;
         req.session = null;
         try {
-            console.log("The login controller hit")
             // Search for userName in database
             const user = await User.findOne({userName: body.username});
 
