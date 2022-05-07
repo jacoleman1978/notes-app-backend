@@ -21,7 +21,7 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 app.use(cors({
-    origin: `http://localhost:3000`,
+    origin: `https://notesapp-milestone3.netlify.app/`,
     credentials: true
 }));
 app.use(json());
