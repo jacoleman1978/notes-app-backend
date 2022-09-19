@@ -26,14 +26,16 @@ app.use(function(req, res, next) {
         next();
     }
 });
+app.set('trust proxy', 1);
 app.use(cookieSession({
     name: 'session',
-    sameSite: 'strict',
+    sameSite: 'none',
     keys: [process.env.SESSION_SECRET],
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    secure: true
 }))
 app.use(cors({
-    origin: `https://notesapp-milestone3.netlify.app`,
+    origin: process.env.FRONTEND_APP_URL,
     credentials: true
 }));
 app.use(json());
